@@ -89,13 +89,19 @@ void Elevator::printDestFloor() {
 
 void Elevator::removeDestFloor() {
   if (!destFloors.empty()) {
-    destFloors.erase(destFloors.begin());
+    auto it = std::find(destFloors.begin(), destFloors.end(), floor);
+    if (it != destFloors.end()) {
+      destFloors.erase(it);
+    }
   }
 }
 
 void Elevator::removeCallFloor() {
   if (!calledFloors.empty()) {
-    calledFloors.erase(calledFloors.begin());
+    auto it = std::find(calledFloors.begin(), calledFloors.end(), floor);
+    if (it != calledFloors.end()) {
+      calledFloors.erase(it);
+    }
   }
 }
 
