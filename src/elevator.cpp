@@ -54,7 +54,6 @@ void Elevator::printInfo() {
 }
 
 void Elevator::move() {
-  Elevator::printCallFloor();
   if (!destFloors.empty() && floor < *destFloors.begin()) {
     floor++;
   } else if (!destFloors.empty() && floor > *destFloors.begin()) {
