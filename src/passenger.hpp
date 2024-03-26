@@ -25,6 +25,7 @@ class Passenger {
   void removeCallTime();
   void removeStartFloor();
   void removeEndFloor();
+  void removeFloor(int floor);
 
  private:
   int id;

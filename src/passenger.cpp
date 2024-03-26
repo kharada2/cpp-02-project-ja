@@ -1,5 +1,6 @@
 #include "passenger.hpp"
 
+#include <algorithm>
 #include <iostream>
 
 Passenger::Passenger(int id, int weight) : id(id), weight(weight), isBoarded(false), isWaiting(false){};
@@ -58,6 +59,13 @@ void Passenger::removeCallTime() {
 void Passenger::removeStartFloor() {
   if (!startFloor.empty()) {
     startFloor.erase(startFloor.begin());
+  }
+}
+
+void Passenger::removeFloor(int floor) {
+  if (!startFloor.empty()) {
+    auto it = std::find(startFloor.begin(), startFloor.end(), floor);
+    startFloor.erase(it);
   }
 }
 
