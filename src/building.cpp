@@ -23,26 +23,27 @@ Passenger* Building::getPassengersById(int id) {
 
 void Building::runElevator(int time) {
   for (auto elevator : elevators) {
+    // エレベータ稼働
     elevator->move();
-
-    // 　エレベータを呼ぶ
-    callElevator(elevator, time);
 
     // 乗客が押した階についたので、エレベータから降りる
     dropPassenger(elevator, time);
 
-    // 乗客のいる階についたので、エレベータに乗客を乗せる
+    // 乗客が待つ階についたので、乗客がエレベータに乗る
     ridePassenger(elevator, time);
 
-    // エレベータ稼働
-    // ToDo: 乗り降りがあった場合、稼働されないようにしたい。
+    // エレベータを呼ぶ
+    callElevator(elevator, time);
   }
 }
 
 void Building::callElevator(Elevator* elevator, int time) {
+  // std::cout << "DEBUG" << std::endl;
+  // std::cout << passengers[0]->getIsBoarded() << " " << passengers[0]->getIsCalled() << " "
+  //           << *passengers[0]->getCallTimeTop() << std::endl;
   for (auto passenger : passengers) {
     if (!passenger->getIsBoarded() && !passenger->getIsCalled() && passenger->getCallTimeTop() != nullptr &&
-        *passenger->getCallTimeTop() <= time) {
+        *passenger->getCallTimeTop() >= time) {
       elevator->setCallFloor(passenger->getStartFloorTop());
 
       passenger->changeCalledState(true);

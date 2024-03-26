@@ -54,7 +54,7 @@ void Elevator::printInfo() {
 }
 
 void Elevator::move() {
-  // 乗り降りがあったステップでは稼働させなくてもいいかも
+  Elevator::printCallFloor();
   if (!destFloors.empty() && floor < *destFloors.begin()) {
     floor++;
   } else if (!destFloors.empty() && floor > *destFloors.begin()) {
@@ -69,21 +69,23 @@ void Elevator::move() {
 int Elevator::getFloor() { return floor; }
 
 void Elevator::printCallFloor() {
-  std::cout << "printCallFloor" << std::endl;
+  std::cout << "printCallFloor:";
   if (!calledFloors.empty()) {
     for (auto i : calledFloors) {
-      std::cout << i << std::endl;
+      std::cout << i << " ";
     }
   }
+  std::cout << std::endl;
 }
 
 void Elevator::printDestFloor() {
-  std::cout << "printDestFloor" << std::endl;
+  std::cout << "printDestFloor:";
   if (!destFloors.empty()) {
     for (auto i : destFloors) {
-      std::cout << i << std::endl;
+      std::cout << i << " ";
     }
   }
+  std::cout << std::endl;
 }
 
 void Elevator::removeDestFloor() {
