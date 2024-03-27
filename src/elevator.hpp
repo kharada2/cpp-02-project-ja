@@ -23,6 +23,8 @@ class Elevator {
   bool isBoarded(int id);
   int getFloor();
   int getId();
+  int getMaxLoad();
+  int getCurrentLoad();
   int getDestFloor();
   int* getCalledFloor();
   State getState();

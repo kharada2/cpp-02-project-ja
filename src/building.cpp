@@ -78,14 +78,21 @@ void Building::ridePassenger(Elevator* elevator, int time) {
         passenger->getStartFloorTop() != nullptr && *passenger->getStartFloorTop() == elevator->getFloor() &&
         elevator->getCalledFloor() != nullptr && *elevator->getCalledFloor() == elevator->getFloor() &&  //
         passenger->getCallTimeTop() != nullptr && *passenger->getCallTimeTop() <= time) {
-      elevator->addPassenger(passenger);
-      elevator->setDestFloor(passenger->getEndFloorTop());
-      elevator->removeCallFloor();
+      
+      int checkLoad = elevator->getCurrentLoad() + passenger->getWeight();
+      // 最大重量のチェック
+      if (checkLoad <= elevator->getMaxLoad()) {
+        elevator->addPassenger(passenger);
+        elevator->setDestFloor(passenger->getEndFloorTop());
+        elevator->removeCallFloor();
 
-      passenger->changeBoardedState(true);
-      passenger->changeCalledState(false);
-      passenger->removeCallTime();
-      passenger->removeStartFloor();
+        passenger->changeBoardedState(true);
+        passenger->changeCalledState(false);
+        passenger->removeCallTime();
+        passenger->removeStartFloor();
+      } else {
+        std::cout << "!!!! Over the weight limit !!!!" << std::endl;
+      }
     }
   }
 }

@@ -4,11 +4,12 @@
 #include <iostream>
 
 Elevator::Elevator(int maxFloor, int maxLoad, int id)
-    : maxFloor(maxFloor), maxLoad(maxLoad), id(id), floor(0), state(Stop){};
+    : maxFloor(maxFloor), maxLoad(maxLoad), id(id), floor(0), currentLoad(0), state(Stop){};
 
 void Elevator::addPassenger(Passenger* passenger) {
   // Boarded状態の変更
   passenger->changeBoardedState(true);
+  
   // 乗客の追加
   passengers.push_back(passenger);
   // 最大積算重量のチェック
@@ -154,3 +155,6 @@ int* Elevator::getCalledFloor() {
 }
 
 int Elevator::getMaxFloor() { return maxFloor; } 
+
+int Elevator::getMaxLoad() { return maxLoad; }
+int Elevator::getCurrentLoad() { return currentLoad; }
