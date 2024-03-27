@@ -35,11 +35,11 @@ void Building::runElevator(int time) {
     // エレベータ稼働
     elevator->move();
 
-    // 乗客が待つ階についたので、乗客がエレベータに乗る
-    ridePassenger(elevator, time);
-
     // 乗客が押した階についたので、エレベータから降りる
     dropPassenger(elevator, time);
+
+    // 乗客が待つ階についたので、乗客がエレベータに乗る
+    ridePassenger(elevator, time);
   }
 }
 
@@ -82,17 +82,22 @@ void Building::ridePassenger(Elevator* elevator, int time) {
       passenger->changeBoardedState(true);
       passenger->changeCalledState(false);
       passenger->removeCallTime();
-
       passenger->removeStartFloor();
     }
   }
 }
 
 void Building::dropPassenger(Elevator* elevator, int time) {
+  // std::cout << "e ID:" << elevator->getId() << "\n";
+
   for (auto passenger : passengers) {
+    // std::cout << "p ID: " << passenger->getId() << std::endl;
+    // std::cout << ",end flooe: " << *passenger->getEndFloorTop() << std::endl;
     if (passenger->getIsBoarded() && passenger->getEndFloorTop() != nullptr &&
         *passenger->getEndFloorTop() == elevator->getFloor()) {
       elevator->removePassenger(passenger);
+
+      // std::cout << "e ID: " << elevator->getId() << std::endl;
       elevator->removeDestFloor();
       elevator->removeCalledPassengers(passenger->getId());
 
