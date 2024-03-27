@@ -4,25 +4,30 @@
 
 Building::Building() {}
 
-std::vector<Passenger*> Building::getPassengers() { return passengers; }
+std::vector<Passenger *> Building::getPassengers() { return passengers; }
 
-std::vector<Elevator*> Building::getElevators() { return elevators; }
+std::vector<Elevator *> Building::getElevators() { return elevators; }
 
-void Building::addElevator(Elevator* elevator) { elevators.push_back(elevator); }
+void Building::addElevator(Elevator *elevator) { elevators.push_back(elevator); }
 
-void Building::addPassengers(Passenger* passenger) { passengers.push_back(passenger); }
+void Building::addPassengers(Passenger *passenger) { passengers.push_back(passenger); }
 
-Passenger* Building::getPassengersById(int id) {
-  for (Passenger* i : passengers) {
-    if (i->getId() == id) {
+Passenger *Building::getPassengersById(int id)
+{
+  for (Passenger *i : passengers)
+  {
+    if (i->getId() == id)
+    {
       return i;
     }
   }
-  return nullptr;  // Passenger with given ID not found
+  return nullptr; // Passenger with given ID not found
 }
 
-void Building::runElevator(int time) {
-  for (auto elevator : elevators) {
+void Building::runElevator(int time)
+{
+  for (auto elevator : elevators)
+  {
     elevator->move();
 
     // 　エレベータを呼ぶ
@@ -39,10 +44,13 @@ void Building::runElevator(int time) {
   }
 }
 
-void Building::callElevator(Elevator* elevator, int time) {
-  for (auto passenger : passengers) {
+void Building::callElevator(Elevator *elevator, int time)
+{
+  for (auto passenger : passengers)
+  {
     if (!passenger->getIsBoarded() && !passenger->getIsCalled() && passenger->getCallTimeTop() != nullptr &&
-        *passenger->getCallTimeTop() <= time) {
+        *passenger->getCallTimeTop() <= time)
+    {
       elevator->setCallFloor(passenger->getStartFloorTop());
 
       passenger->changeCalledState(true);
@@ -50,11 +58,14 @@ void Building::callElevator(Elevator* elevator, int time) {
   }
 }
 
-void Building::ridePassenger(Elevator* elevator, int time) {
-  for (auto passenger : passengers) {
-    if (!passenger->getIsBoarded() &&                                                                          //
-        passenger->getStartFloorTop() != nullptr && *passenger->getStartFloorTop() == elevator->getFloor() &&  //
-        passenger->getCallTimeTop() != nullptr && *passenger->getCallTimeTop() <= time) {
+void Building::ridePassenger(Elevator *elevator, int time)
+{
+  for (auto passenger : passengers)
+  {
+    if (!passenger->getIsBoarded() &&                                                                         //
+        passenger->getStartFloorTop() != nullptr && *passenger->getStartFloorTop() == elevator->getFloor() && //
+        passenger->getCallTimeTop() != nullptr && *passenger->getCallTimeTop() <= time)
+    {
       elevator->addPassenger(passenger);
       elevator->setDestFloor(passenger->getEndFloorTop());
       elevator->removeCallFloor();
@@ -67,10 +78,13 @@ void Building::ridePassenger(Elevator* elevator, int time) {
   }
 }
 
-void Building::dropPassenger(Elevator* elevator, int time) {
-  for (auto passenger : passengers) {
+void Building::dropPassenger(Elevator *elevator, int time)
+{
+  for (auto passenger : passengers)
+  {
     if (passenger->getIsBoarded() && passenger->getEndFloorTop() != nullptr &&
-        *passenger->getEndFloorTop() == elevator->getFloor()) {
+        *passenger->getEndFloorTop() == elevator->getFloor())
+    {
       elevator->removePassenger(passenger);
       elevator->removeDestFloor();
 
@@ -80,14 +94,48 @@ void Building::dropPassenger(Elevator* elevator, int time) {
   }
 }
 
-void Building::printStatus() {
-  for (auto elevator : elevators) {
+void Building::printStatus()
+{
+  for (auto elevator : elevators)
+  {
     std::cout << "elevator[" << elevator->getId() << "]:";
     std::cout << "Floor:" << elevator->getFloor() << ", ";
     std::cout << "Passengers:";
-    for (auto passenger : elevator->getPassengers()) {
+    for (auto passenger : elevator->getPassengers())
+    {
       std::cout << passenger->getId() << " ";
     }
     std::cout << std::endl;
   }
+}
+
+void Building::print_out()
+{
+  for (auto elevator : elevators)
+  {
+    std::cout << "\tElevetor " << elevator->getId() << std::endl;
+    int i = elevator->getMaxFloor();
+    for (i; i >= 0; i--)
+    {
+      if (i == elevator->getFloor())
+      {
+        std::cout << "\033[1;31m" << i << "F\t" << "[";
+        for (auto passenger : passengers)
+        {
+          if (passenger->getIsBoarded() == 1)
+          {
+            std::cout << " " << passenger->getId() << " ";
+          }
+        }
+            std::cout << "]\033[m\n";
+      }
+      else
+      {
+        std::cout << i << "F\t"
+                  << "[]" << std::endl;
+      }
+    }
+    std::cout << "\n";
+  }
+  system("pause");
 }

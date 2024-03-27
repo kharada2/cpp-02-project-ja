@@ -37,6 +37,10 @@ void Simulator::parseElevators(std::ifstream& file) {
   if (!(iss >> numberOfElevators >> numberOfFloors >> elevatorCapacity)) {
     throw std::runtime_error("Exception! Cannot parse the first line of the file!");
   } else {
+    std::cout << "* Elevator info *" << std::endl;
+    std::cout << "Number : " << numberOfElevators << std::endl;
+    std::cout << "MaxFloor : " << numberOfFloors << std::endl;
+    std::cout << "MaxLoad : " << elevatorCapacity << "\n" << std::endl;
     for (int i = 1; i <= numberOfElevators; ++i) {
       building.addElevator(new Elevator(numberOfFloors, elevatorCapacity, i));
     }
@@ -94,10 +98,12 @@ void Simulator::parseInputs(std::ifstream& file) {
 }
 
 void Simulator::run() {
-  for (int time = 0; time < 100; time++) {
+  for (int time = 0; time < 80; time++) {
     building.runElevator(time);
-    std::cout << "[SimulationStep: " << time << "]:" << std::endl;
-    building.printStatus();
+//    std::cout << "[SimulationStep: " << time << "]:" << std::endl;
+//    building.printStatus();
+    std::cout << "Time : " << time << " ms" << std::endl;
+    building.print_out();    
   }
 }
 

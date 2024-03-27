@@ -101,3 +101,5 @@ void Elevator::removeCallFloor() {
 int Elevator::getId() { return id; }
 
 std::vector<Passenger*> Elevator::getPassengers() const { return passengers; }
+
+int Elevator::getMaxFloor() { return maxFloor; } 

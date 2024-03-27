@@ -26,6 +26,7 @@ class Elevator {
   void printDestFloor();
   void removeDestFloor();
   void removeCallFloor();
+  int getMaxFloor();
   std::vector<Passenger*> getPassengers() const;
 
  private:

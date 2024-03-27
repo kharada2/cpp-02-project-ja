@@ -14,6 +14,7 @@ class Building {
   Passenger* getPassengersById(int id);
   void runElevator(int time);
   void printStatus();
+  void print_out();
 
  private:
   std::vector<Passenger*> passengers;
