@@ -151,25 +151,39 @@ void Building::waitForEnterKey() {
 }
 
 void Building::print_out() {
+  int maxFloors = 0;  // Find the maximum number of floors among all elevators
   for (auto elevator : elevators) {
-    std::cout << "\tElevetor " << elevator->getId() << std::endl;
-    int i = elevator->getMaxFloor();
-    for (i; i >= 0; i--) {
-      if (i == elevator->getFloor()) {
-        std::cout << "\033[1;31m" << i << "F\t"
-                  << "[";
-        for (auto passenger : passengers) {
-          if (passenger->getIsBoarded() == 1) {
-            std::cout << " " << passenger->getId() << " ";
+    maxFloors = std::max(maxFloors, elevator->getMaxFloor());
+  }
+
+  // std::string elevatorNames;
+  // for (auto elevator : elevators) {
+  //   elevatorNames += elevator->getId() + "\t";  // Concatenate elevator names
+  // }
+  // std::cout << "\t" << elevatorNames << std::endl;
+
+  for (int floor = maxFloors; floor >= 0; floor--) {
+    std::string output;
+
+    for (auto elevator : elevators) {
+      if (floor <= elevator->getMaxFloor()) {
+        std::string floorStr = std::to_string(floor);
+        if (floor == elevator->getFloor()) {
+          output += "\033[1;31m" + floorStr + "F\t[";
+          for (auto passenger : passengers) {
+            if (passenger->getIsBoarded() == 1) {
+              output += " " + std::to_string(passenger->getId()) + " ";
+            }
           }
+          output += "]\033[m\t\t\t\t";
+        } else {
+          output += floorStr + "F\t[]\t\t\t\t";
         }
-        std::cout << "]\033[m\n";
       } else {
-        std::cout << i << "F\t"
-                  << "[]" << std::endl;
+        output += "\t\t\t";  // Placeholder for floors that don't exist for this elevator
       }
     }
-    std::cout << "\n";
+    std::cout << output << std::endl;
   }
   // std::this_thread::sleep_for(std::chrono::seconds(1));
   waitForEnterKey();

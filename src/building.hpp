@@ -24,4 +24,5 @@ class Building {
   void callElevator(Elevator* elevator, Passenger* passenger, int time);
   void ridePassenger(Elevator* elevator, int time);
   void dropPassenger(Elevator* elevator, int time);
+  void waitForEnterKey();
 };
