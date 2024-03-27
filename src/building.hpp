@@ -16,6 +16,7 @@ class Building {
   void printStatus();
   bool checkContinue();
   Elevator* getNearestElevator(int floor);
+  void print_out();
 
  private:
   std::vector<Passenger*> passengers;

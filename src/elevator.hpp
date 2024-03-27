@@ -31,6 +31,7 @@ class Elevator {
   void removeDestFloor();
   void removeCallFloor();
   void removeCalledPassengers(int id);
+  int getMaxFloor();
   std::vector<Passenger*> getPassengers() const;
   std::string enumToString(State state);
 

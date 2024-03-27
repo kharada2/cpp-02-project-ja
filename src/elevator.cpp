@@ -152,3 +152,5 @@ int* Elevator::getCalledFloor() {
   }
   return nullptr;
 }
+
+int Elevator::getMaxFloor() { return maxFloor; } 
