@@ -16,12 +16,22 @@ void Elevator::addPassenger(Passenger* passenger) {
 };
 
 void Elevator::removePassenger(Passenger* passenger) {
-  if (!passengers.empty()) {
-    auto it = std::find(passengers.begin(), passengers.end(), passenger);
-    if (it != passengers.end()) {
-      passengers.erase(it);
-      // currentLoad -= itgetWeight();
-    }
+  int passengerID = passenger->getId();
+  // if (!passengers.empty()) {
+  //   auto it = std::find(passengers.begin(), passengers.end(), passenger);
+  //   // if (it != passengers.end()) {
+  //   //   passengers.erase(it);
+  //   //   // currentLoad -= itgetWeight();
+  //   // }
+  //   passengers.erase(it);
+  // }
+
+  // IDで削除
+  auto it = std::find_if(passengers.begin(), passengers.end(),
+                         [passengerID](const auto p) { return p->getId() == passengerID; });
+
+  if (it != passengers.end()) {
+    passengers.erase(it);
   }
 }
 

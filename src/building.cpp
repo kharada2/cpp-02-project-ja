@@ -91,7 +91,6 @@ void Building::dropPassenger(Elevator* elevator, int time) {
   // std::cout << "e ID:" << elevator->getId() << "\n";
 
   for (auto passenger : passengers) {
-    // std::cout << "p ID: " << passenger->getId() << std::endl;
     // std::cout << ",end flooe: " << *passenger->getEndFloorTop() << std::endl;
     if (passenger->getIsBoarded() && passenger->getEndFloorTop() != nullptr &&
         *passenger->getEndFloorTop() == elevator->getFloor()) {
