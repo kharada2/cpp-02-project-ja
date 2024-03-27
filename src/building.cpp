@@ -49,7 +49,7 @@ bool Building::checkContinue() {
 
   for (auto passenger : passengers) {
     if (passenger->getEndFloorTop() != nullptr) {
-      std::cout << passenger->getId() << "," << *passenger->getEndFloorTop() << std::endl;
+      // std::cout << passenger->getId() << "," << *passenger->getEndFloorTop() << std::endl;
       returnVal = true;
     }
   }
