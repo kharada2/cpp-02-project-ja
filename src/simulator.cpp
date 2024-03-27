@@ -92,9 +92,13 @@ void Simulator::parseInputs(std::ifstream& file) {
     }
   }
 
+  std::cout << "* Passenger Info *\n";
+
   for (auto i : building.getPassengers()) {
     i->printInfo();
   }
+
+    std::cout << "\n";
 }
 
 void Simulator::run() {
