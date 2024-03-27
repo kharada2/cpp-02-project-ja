@@ -170,8 +170,8 @@ void Building::print_out() {
         std::string floorStr = std::to_string(floor);
         if (floor == elevator->getFloor()) {
           output += "\033[1;31m" + floorStr + "F\t[";
-          for (auto passenger : passengers) {
-            if (passenger->getIsBoarded() == 1) {
+          for (auto passenger : elevator->getPassengers()) {
+            if (passenger->getIsBoarded()) {
               output += " " + std::to_string(passenger->getId()) + " ";
             }
           }
@@ -185,6 +185,6 @@ void Building::print_out() {
     }
     std::cout << output << std::endl;
   }
-  // std::this_thread::sleep_for(std::chrono::seconds(1));
-  waitForEnterKey();
+  std::this_thread::sleep_for(std::chrono::seconds(1));
+  // waitForEnterKey();
 }
