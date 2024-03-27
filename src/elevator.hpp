@@ -1,11 +1,11 @@
 #pragma once
+#include <map>
 #include <vector>
 
 #include "passenger.hpp"
-
 class Passenger;
 
-// enum class ElevatorState { up, down, stop };
+enum State { Up, Down, Stop };
 
 class Elevator {
  public:
@@ -17,18 +17,24 @@ class Elevator {
   void setMaxFloor(int* maxFloor);
   void setCallFloor(int* floor);
   void setDestFloor(int* floor);
+  void setCalledPassengers(int id);
   void printInfo();
   bool isBoarded(int id);
   int getFloor();
   int getId();
   int getDestFloor();
+  int* getCalledFloor();
+  State getState();
   void printCallFloor();
   void printDestFloor();
   void removeDestFloor();
   void removeCallFloor();
+  void removeCalledPassengers(int id);
   std::vector<Passenger*> getPassengers() const;
+  std::string enumToString(State state);
 
  private:
+  State state;
   int id;
   int floor;
   int maxFloor;
@@ -36,5 +42,7 @@ class Elevator {
   int currentLoad;
   std::vector<Passenger*> passengers;
   std::vector<int> calledFloors;
+  std::vector<int> calledPassengers;
   std::vector<int> destFloors;
+  std::map<State, std::string> stateMap = {{Up, "UP"}, {Down, "DOWN"}, {Stop, "STOP"}};
 };

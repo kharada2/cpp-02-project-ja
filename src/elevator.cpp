@@ -3,7 +3,8 @@
 #include <algorithm>
 #include <iostream>
 
-Elevator::Elevator(int maxFloor, int maxLoad, int id) : maxFloor(maxFloor), maxLoad(maxLoad), id(id), floor(0){};
+Elevator::Elevator(int maxFloor, int maxLoad, int id)
+    : maxFloor(maxFloor), maxLoad(maxLoad), id(id), floor(0), state(Stop){};
 
 void Elevator::addPassenger(Passenger* passenger) {
   // Boarded状態の変更
@@ -48,6 +49,7 @@ void Elevator::setDestFloor(int* floor) {
   }
 }
 
+void Elevator::setCalledPassengers(int id) { calledPassengers.push_back(id); }
 void Elevator::printInfo() {
   std::cout << "maxLoad is: " << maxLoad << std::endl;
   std::cout << "maxFloor is: " << maxFloor << std::endl;
@@ -56,12 +58,18 @@ void Elevator::printInfo() {
 void Elevator::move() {
   if (!destFloors.empty() && floor < *destFloors.begin()) {
     floor++;
+    state = Up;
   } else if (!destFloors.empty() && floor > *destFloors.begin()) {
     floor--;
+    state = Down;
   } else if (!calledFloors.empty() && floor < *calledFloors.begin()) {
     floor++;
+    state = Up;
   } else if (!calledFloors.empty() && floor > *calledFloors.begin()) {
     floor--;
+    state = Down;
+  } else {
+    state = Stop;
   }
 }
 
@@ -105,6 +113,32 @@ void Elevator::removeCallFloor() {
   }
 }
 
+void Elevator::removeCalledPassengers(int id) {
+  if (!calledPassengers.empty()) {
+    auto it = std::find(calledPassengers.begin(), calledPassengers.end(), id);
+    if (it != calledPassengers.end()) {
+      calledPassengers.erase(it);
+    }
+  }
+}
+
 int Elevator::getId() { return id; }
 
 std::vector<Passenger*> Elevator::getPassengers() const { return passengers; }
+
+State Elevator::getState() { return state; }
+
+std::string Elevator::enumToString(State state) {
+  if (auto it = stateMap.find(state); it != stateMap.end()) {
+    return it->second;
+  } else {
+    return "Unknown";
+  }
+}
+
+int* Elevator::getCalledFloor() {
+  if (calledFloors.size() != 0) {
+    return &calledFloors[0];
+  }
+  return nullptr;
+}
