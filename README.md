@@ -1,9 +1,10 @@
 # cpp-02-project-ja
 ## README
 #### セットアップと実行の手順
-- elevator.exeを実行する
+- ビルドコマンドは以下の通り
+  - `g++ --std=c++17 *.cpp -o elevator`
 - 実行コマンドは「./elevator インプットファイルのパス」
-  - 実行コマンドサンプル'./elevator C:\Users\cpp-02-project-ja\base_input.txt'
+  - 実行コマンドサンプル`./elevator C:\Users\cpp-02-project-ja\base_input.txt`
 #### プロジェクトにおける重要な設計やその設計理由
 - [図](https://docs.google.com/presentation/d/1bA3KirMn_il-RubIFEMaonWPbj1fI-meYPS08ZQUFsc/edit#slide=id.p)を作成し要件を満たせる構成および各classの持つ関数や項目を検討
 - 複数台エレベータがあるときに、どちらのエレベータをcallするのか判定するロジックを追加（例：近い方、とか）
