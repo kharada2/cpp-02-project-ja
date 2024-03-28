@@ -86,6 +86,7 @@ void Building::ridePassenger(Elevator* elevator, int time) {
         elevator->removeCallFloor();
 
         passenger->changeBoardedState(true);
+        passenger->setBoardElevatorId(elevator->getId());
         passenger->changeCalledState(false);
         passenger->removeCallTime();
         passenger->removeStartFloor();
@@ -99,7 +100,7 @@ void Building::ridePassenger(Elevator* elevator, int time) {
 
 void Building::dropPassenger(Elevator* elevator, int time) {
   for (auto passenger : passengers) {
-    if (passenger->getIsBoarded() &&  // 1. 乗っている
+    if (passenger->getIsBoarded() && passenger->getBoardElevatorId() == elevator->getId() &&  // 1. 乗っている
         passenger->getEndFloorTop() != nullptr &&
         *passenger->getEndFloorTop() == elevator->getFloor())  // 2. 行先階についた
     {
@@ -108,6 +109,7 @@ void Building::dropPassenger(Elevator* elevator, int time) {
       elevator->removeCalledPassengers(passenger->getId());
 
       passenger->changeBoardedState(false);
+      passenger->setBoardElevatorId(-1);
       passenger->removeEndFloor();
     }
   }

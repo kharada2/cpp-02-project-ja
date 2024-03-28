@@ -26,6 +26,8 @@ class Passenger {
   void removeStartFloor();
   void removeEndFloor();
   void removeFloor(int floor);
+  void setBoardElevatorId(int boardElevatorId);
+  int getBoardElevatorId();
 
  private:
   int id;
@@ -34,5 +36,6 @@ class Passenger {
   std::vector<int> startFloor;
   std::vector<int> endFloor;
   bool isBoarded;
+  int boardElevatorId;
   bool isWaiting;
 };

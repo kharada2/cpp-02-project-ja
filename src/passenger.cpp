@@ -3,7 +3,8 @@
 #include <algorithm>
 #include <iostream>
 
-Passenger::Passenger(int id, int weight) : id(id), weight(weight), isBoarded(false), isWaiting(false){};
+Passenger::Passenger(int id, int weight)
+    : id(id), weight(weight), isBoarded(false), isWaiting(false), boardElevatorId(-1){};
 
 int Passenger::getWeight() { return weight; }
 
@@ -95,3 +96,6 @@ int* Passenger::getEndFloorTop() {
   }
   return nullptr;
 }
+
+void Passenger::setBoardElevatorId(int boardElevatorId) { this->boardElevatorId = boardElevatorId; }
+int Passenger::getBoardElevatorId() { return boardElevatorId; }
