@@ -190,7 +190,7 @@ void Building::print_out()
 
   for (auto elevator : elevators)
   {
-    std::cout << "Elevator " << elevator->getId();
+    std::cout << "Elevator " << elevator->getId() << "\t\t\t\t";
   }
 
   std::cout << "\n";
