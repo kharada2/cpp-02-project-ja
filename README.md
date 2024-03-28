@@ -5,10 +5,10 @@
 - 実行コマンドは「./elevator インプットファイルのパス」
   - 実行コマンドサンプル'./elevator C:\Users\cpp-02-project-ja\base_input.txt'
 #### プロジェクトにおける重要な設計やその設計理由
-- [図][https://docs.google.com/presentation/d/1bA3KirMn_il-RubIFEMaonWPbj1fI-meYPS08ZQUFsc/edit#slide=id.p]を作成し要件を満たせる構成および各classの持つ関数や項目を検討
+- [図](https://docs.google.com/presentation/d/1bA3KirMn_il-RubIFEMaonWPbj1fI-meYPS08ZQUFsc/edit#slide=id.p)を作成し要件を満たせる構成および各classの持つ関数や項目を検討
 - 複数台エレベータがあるときに、どちらのエレベータをcallするのか判定するロジックを追加（例：近い方、とか）
-- 指定した時間に載れなかったときにエラーを出力
-- 
+- 乗車拒否された乗客のIDを表示
+- 乗車拒否された乗客は次の機会まで待機
 #### このツールまたはサービスの使い方の説明 (ユーザー向けの説明)
 - 入力ファイルに記載された情報をもとにエレベータ制御のシミュレーションを行うツールです
 - 入力ファイルのフォーマットは以下の通り
