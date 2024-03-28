@@ -186,14 +186,14 @@ void Building::print_out()
     maxFloors = std::max(maxFloors, elevator->getMaxFloor());
   }
 
+    std::cout << "Waiting Passenger" << "\t\t\t";
+
   for (auto elevator : elevators)
   {
-    std::cout << "\t"
-              << "Elevator" << elevator->getId() << "\t\t\t";
+    std::cout << "Elevator " << elevator->getId();
   }
 
-//  std::cout << "Wait Passenger";
-//  std::cout << "\n";
+  std::cout << "\n";
 
   // std::string elevatorNames;
   // for (auto elevator : elevators) {
@@ -204,6 +204,29 @@ void Building::print_out()
   for (int floor = maxFloors; floor >= 0; floor--)
   {
     std::string output;
+    int waiting_pID = 0;
+    int waiting_floor = 0;
+    int flag = 0;
+
+    for (auto passenger : passengers)
+    {
+      if (passenger->getIsCalled() == 1)
+      {
+        waiting_pID = passenger->getId();
+        waiting_floor = *passenger->getStartFloorTop();
+        if(floor == waiting_floor){
+          std::cout << waiting_pID;
+        }
+        flag = 1;
+      }
+      else
+      {
+        waiting_pID = 0;
+        flag = 0;
+      }
+    }
+
+    std::cout << "\t\t\t\t";
 
     for (auto elevator : elevators)
     {
@@ -215,7 +238,6 @@ void Building::print_out()
           output += "\033[1;31m" + floorStr + "F\t[";
           for (auto passenger : elevator->getPassengers())
           {
-            std::cout << passenger->getIsCalled();
             if (passenger->getIsBoarded())
             {
               output += " " + std::to_string(passenger->getId()) + " ";
@@ -235,17 +257,6 @@ void Building::print_out()
     }
     std::cout << output << std::endl;
   }
-
-//  for (auto elevator : elevators)
-//  {
-//    for (auto passenger : elevator->getPassengers())
-//    {
-//      std::cout << *passenger->getStartFloorTop() << "\n";
-//    }
-//  }
-
-  std::cout << "\n" << std::endl;
-
   //  std::this_thread::sleep_for(std::chrono::milliseconds(500));
   waitForEnterKey();
 }
