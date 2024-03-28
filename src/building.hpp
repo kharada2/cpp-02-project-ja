@@ -12,7 +12,7 @@ class Building {
   void addElevator(Elevator* elevator);
   void addPassengers(Passenger* passengers);
   Passenger* getPassengersById(int id);
-  void runElevator(int time);
+  void control(int time);
   void printStatus();
   bool checkContinue();
   Elevator* getNearestElevator(int floor);

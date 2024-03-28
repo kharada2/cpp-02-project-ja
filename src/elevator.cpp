@@ -67,7 +67,7 @@ void Elevator::printInfo() {
   std::cout << "maxFloor is: " << maxFloor << std::endl;
 }
 
-void Elevator::move() {
+void Elevator::control() {
   if (!destFloors.empty() && floor < *destFloors.begin()) {
     floor++;
     state = Up;

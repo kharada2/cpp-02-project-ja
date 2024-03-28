@@ -22,26 +22,27 @@ Passenger* Building::getPassengersById(int id) {
       return i;
     }
   }
-  return nullptr;  // Passenger with given ID not found
+  return nullptr;
 }
 
-void Building::runElevator(int time) {
+void Building::control(int time) {
+  // 1. エレベータを呼ぶ（エレベーターのボタンを押す）
   for (auto passenger : passengers) {
-    // エレベータを呼ぶ
     if (passenger->getStartFloorTop() != nullptr) {
+      // 最も近いエレベータを呼び出す
       auto elevator = getNearestElevator(*passenger->getStartFloorTop());
       callElevator(elevator, passenger, time);
     }
   }
 
   for (auto elevator : elevators) {
-    // エレベータ稼働
-    elevator->move();
+    // 2. エレベータ制御
+    elevator->control();
 
-    // 乗客が押した階についたので、エレベータから降りる
+    // 3. 乗客の行先階についたので、エレベータから降ろす
     dropPassenger(elevator, time);
 
-    // 乗客が待つ階についたので、乗客がエレベータに乗る
+    // 4. 乗客が待つ階についたので、乗客がエレベータに乗る
     ridePassenger(elevator, time);
   }
 }
@@ -70,10 +71,13 @@ void Building::callElevator(Elevator* elevator, Passenger* passenger, int time) 
 
 void Building::ridePassenger(Elevator* elevator, int time) {
   for (auto passenger : passengers) {
-    if (!passenger->getIsBoarded() &&  //
-        passenger->getStartFloorTop() != nullptr && *passenger->getStartFloorTop() == elevator->getFloor() &&
-        elevator->getCalledFloor() != nullptr && *elevator->getCalledFloor() == elevator->getFloor() &&  //
-        passenger->getCallTimeTop() != nullptr && *passenger->getCallTimeTop() <= time) {
+    if (!passenger->getIsBoarded() &&  // 1. 乗っていない
+        passenger->getStartFloorTop() != nullptr &&
+        *passenger->getStartFloorTop() == elevator->getFloor() &&  // 2. 乗客が待つ階に到着　
+        elevator->getCalledFloor() != nullptr &&
+        *elevator->getCalledFloor() == elevator->getFloor() &&  // 3. 乗客の呼び出し階に到着
+        passenger->getCallTimeTop() != nullptr && *passenger->getCallTimeTop() <= time  // 4. 乗客がコールした後　
+    ) {
       int checkLoad = elevator->getCurrentLoad() + passenger->getWeight();
       // 最大重量のチェック
       if (checkLoad <= elevator->getMaxLoad()) {
@@ -94,11 +98,11 @@ void Building::ridePassenger(Elevator* elevator, int time) {
 }
 
 void Building::dropPassenger(Elevator* elevator, int time) {
-  // std::cout << "e ID:" << elevator->getId() << "\n";
-
   for (auto passenger : passengers) {
-    if (passenger->getIsBoarded() && passenger->getEndFloorTop() != nullptr &&
-        *passenger->getEndFloorTop() == elevator->getFloor()) {
+    if (passenger->getIsBoarded() &&  // 1. 乗っている
+        passenger->getEndFloorTop() != nullptr &&
+        *passenger->getEndFloorTop() == elevator->getFloor())  // 2. 行先階についた
+    {
       elevator->removePassenger(passenger);
       elevator->removeDestFloor();
       elevator->removeCalledPassengers(passenger->getId());
@@ -155,12 +159,6 @@ void Building::print_out() {
   for (auto elevator : elevators) {
     maxFloors = std::max(maxFloors, elevator->getMaxFloor());
   }
-
-  // std::string elevatorNames;
-  // for (auto elevator : elevators) {
-  //   elevatorNames += elevator->getId() + "\t";  // Concatenate elevator names
-  // }
-  // std::cout << "\t" << elevatorNames << std::endl;
 
   for (int floor = maxFloors; floor >= 0; floor--) {
     std::string output;

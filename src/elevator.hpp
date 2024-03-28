@@ -1,7 +1,7 @@
 #pragma once
 #include <map>
-#include <vector>
 #include <string>
+#include <vector>
 
 #include "passenger.hpp"
 class Passenger;
@@ -13,7 +13,7 @@ class Elevator {
   Elevator(int maxFloor, int maxLoad, int id);
   void addPassenger(Passenger* passenger);
   void removePassenger(Passenger* passenger);
-  void move();
+  void control();
   void setMaxLoad(int* maxLoad);
   void setMaxFloor(int* maxFloor);
   void setCallFloor(int* floor);

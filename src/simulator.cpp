@@ -107,7 +107,7 @@ void Simulator::run() {
     std::cout << "______________________________________________________" << std::endl;
 
     std::cout << "Time : " << time << " ms" << std::endl;
-    building.runElevator(time);
+    building.control(time);
     // std::cout << "[SimulationStep: " << time << "]:" << std::endl;
     // building.printStatus();
 
