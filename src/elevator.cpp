@@ -62,6 +62,7 @@ void Elevator::setDestFloor(int* floor) {
 }
 
 void Elevator::setCalledPassengers(int id) { calledPassengers.push_back(id); }
+
 void Elevator::printInfo() {
   std::cout << "maxLoad is: " << maxLoad << std::endl;
   std::cout << "maxFloor is: " << maxFloor << std::endl;

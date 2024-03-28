@@ -108,8 +108,8 @@ void Simulator::run() {
 
     std::cout << "Time : " << time << " ms" << std::endl;
     building.runElevator(time);
-    // std::cout << "[SimulationStep: " << time << "]:" << std::endl;
-    // building.printStatus();
+//     std::cout << "[SimulationStep: " << time << "]:" << std::endl;
+//     building.printStatus();
 
     building.print_out();
     time += 1;
