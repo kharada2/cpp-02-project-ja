@@ -9,7 +9,7 @@ Elevator::Elevator(int maxFloor, int maxLoad, int id)
 void Elevator::addPassenger(Passenger* passenger) {
   // Boarded状態の変更
   passenger->changeBoardedState(true);
-  
+
   // 乗客の追加
   passengers.push_back(passenger);
   // 最大積算重量のチェック
@@ -33,6 +33,7 @@ void Elevator::removePassenger(Passenger* passenger) {
 
   if (it != passengers.end()) {
     passengers.erase(it);
+    currentLoad -= passenger->getWeight();
   }
 }
 
@@ -154,7 +155,7 @@ int* Elevator::getCalledFloor() {
   return nullptr;
 }
 
-int Elevator::getMaxFloor() { return maxFloor; } 
+int Elevator::getMaxFloor() { return maxFloor; }
 
 int Elevator::getMaxLoad() { return maxLoad; }
 int Elevator::getCurrentLoad() { return currentLoad; }

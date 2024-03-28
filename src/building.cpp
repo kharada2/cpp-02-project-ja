@@ -52,7 +52,6 @@ bool Building::checkContinue() {
 
   for (auto passenger : passengers) {
     if (passenger->getEndFloorTop() != nullptr) {
-      // std::cout << passenger->getId() << "," << *passenger->getEndFloorTop() << std::endl;
       returnVal = true;
     }
   }
@@ -60,9 +59,6 @@ bool Building::checkContinue() {
 }
 
 void Building::callElevator(Elevator* elevator, Passenger* passenger, int time) {
-  // std::cout << "DEBUG" << std::endl;
-  // std::cout << passengers[0]->getIsBoarded() << " " << passengers[0]->getIsCalled() << " "
-  //           << *passengers[0]->getCallTimeTop() << std::endl;
   if (!passenger->getIsBoarded() && !passenger->getIsCalled() && passenger->getCallTimeTop() != nullptr &&
       *passenger->getCallTimeTop() == time) {
     elevator->setCallFloor(passenger->getStartFloorTop());
@@ -78,7 +74,6 @@ void Building::ridePassenger(Elevator* elevator, int time) {
         passenger->getStartFloorTop() != nullptr && *passenger->getStartFloorTop() == elevator->getFloor() &&
         elevator->getCalledFloor() != nullptr && *elevator->getCalledFloor() == elevator->getFloor() &&  //
         passenger->getCallTimeTop() != nullptr && *passenger->getCallTimeTop() <= time) {
-      
       int checkLoad = elevator->getCurrentLoad() + passenger->getWeight();
       // 最大重量のチェック
       if (checkLoad <= elevator->getMaxLoad()) {
@@ -91,7 +86,8 @@ void Building::ridePassenger(Elevator* elevator, int time) {
         passenger->removeCallTime();
         passenger->removeStartFloor();
       } else {
-        std::cout << "!!!! Over the weight limit !!!!" << std::endl;
+        std::cout << "\033[33mPassenger[" << passenger->getId() << "] is refused a ride because of overweight.\033[0m"
+                  << std::endl;
       }
     }
   }
@@ -101,12 +97,9 @@ void Building::dropPassenger(Elevator* elevator, int time) {
   // std::cout << "e ID:" << elevator->getId() << "\n";
 
   for (auto passenger : passengers) {
-    // std::cout << ",end flooe: " << *passenger->getEndFloorTop() << std::endl;
     if (passenger->getIsBoarded() && passenger->getEndFloorTop() != nullptr &&
         *passenger->getEndFloorTop() == elevator->getFloor()) {
       elevator->removePassenger(passenger);
-
-      // std::cout << "e ID: " << elevator->getId() << std::endl;
       elevator->removeDestFloor();
       elevator->removeCalledPassengers(passenger->getId());
 
@@ -158,7 +151,7 @@ void Building::waitForEnterKey() {
 }
 
 void Building::print_out() {
-  int maxFloors = 0;  // Find the maximum number of floors among all elevators
+  int maxFloors = 0;
   for (auto elevator : elevators) {
     maxFloors = std::max(maxFloors, elevator->getMaxFloor());
   }
@@ -187,7 +180,7 @@ void Building::print_out() {
           output += floorStr + "F\t[]\t\t\t\t";
         }
       } else {
-        output += "\t\t\t";  // Placeholder for floors that don't exist for this elevator
+        output += "\t\t\t";
       }
     }
     std::cout << output << std::endl;

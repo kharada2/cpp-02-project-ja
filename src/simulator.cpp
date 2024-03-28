@@ -104,12 +104,15 @@ void Simulator::parseInputs(std::ifstream& file) {
 void Simulator::run() {
   int time = 0;
   while (building.checkContinue() && time < 100) {
+    std::cout << "______________________________________________________" << std::endl;
+
+    std::cout << "Time : " << time << " ms" << std::endl;
     building.runElevator(time);
     // std::cout << "[SimulationStep: " << time << "]:" << std::endl;
     // building.printStatus();
-    time += 1;
-    std::cout << "Time : " << time << " ms" << std::endl;
+
     building.print_out();
+    time += 1;
   }
 }
 
