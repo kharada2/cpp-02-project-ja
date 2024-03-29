@@ -239,7 +239,15 @@ void Building::print_out()
               output += " " + std::to_string(passenger->getId()) + " ";
             }
           }
-          output += "]\033[m\t\t\t\t";
+          if(elevator->getState() == 0){
+            output += "] ^\033[m\t\t\t\t";
+          }
+          else if(elevator->getState() == 1){
+            output += "] v\033[m\t\t\t\t";
+          }
+          else{
+            output += "]\033[m\t\t\t\t";
+          }
         }
         else
         {
