@@ -213,12 +213,10 @@ void Building::print_out()
         if(floor == waiting_floor){
           std::cout << waiting_pID;
         }
-        flag = 1;
       }
       else
       {
         waiting_pID = 0;
-        flag = 0;
       }
     }
 
@@ -240,13 +238,28 @@ void Building::print_out()
             }
           }
           if(elevator->getState() == 0){
-            output += "] ^\033[m\t\t\t\t";
+            if(elevator->getPassengers().size() > 1){
+              output += "] ^\033[m\t\t\t";
+            }
+            else{
+              output += "] ^\033[m\t\t\t\t";
+            }
           }
           else if(elevator->getState() == 1){
-            output += "] v\033[m\t\t\t\t";
+            if(elevator->getPassengers().size() > 1){
+              output += "] v\033[m\t\t\t";
+            }
+            else{
+              output += "] v\033[m\t\t\t\t";
+            }
           }
           else{
-            output += "]\033[m\t\t\t\t";
+            if(elevator->getPassengers().size() > 1){
+              output += "]\033[m\t\t\t";
+            }
+            else{
+              output += "]\033[m\t\t\t\t";
+            }
           }
         }
         else
